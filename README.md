@@ -25,6 +25,19 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 
 ## Project Setup
 
+This project uses Node.js `22.18.0` or newer matching the range in
+`package.json`. On Windows with nvm-windows:
+
+```sh
+nvm install 22.18.0
+nvm use 22.18.0
+corepack enable
+```
+
+After switching Node versions, reinstall dependencies so native optional
+packages such as Rolldown's Windows binding are installed for the active
+runtime:
+
 ```sh
 pnpm install
 ```
