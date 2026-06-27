@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import heroImage from '@/assets/images/hero-image.jpg'
+
 const services = [
   {
     title: 'Diagnostico electronico',
@@ -16,12 +18,6 @@ const services = [
     description: 'Reparaciones mecanicas para recuperar fuerza, seguridad y confiabilidad.',
     icon: 'mdi-engine',
   },
-]
-
-const stats = [
-  { value: '+12', label: 'anos de experiencia' },
-  { value: '24h', label: 'respuesta referencial' },
-  { value: '4.8', label: 'calificacion mockup' },
 ]
 
 const process = [
@@ -74,78 +70,14 @@ const mechanics = [
     </v-app-bar>
 
     <v-main class="landing-page">
-      <section class="hero-section">
+      <section class="hero-section" :style="{ '--hero-image': `url(${heroImage})` }">
         <v-container>
           <v-row align="center" class="hero-row">
-            <v-col cols="12" lg="7">
-              <v-chip class="king-chip mb-6" prepend-icon="mdi-crown" variant="flat">
-                Taller mecanico con corona
-              </v-chip>
-
+            <v-col cols="12" md="9" lg="7">
               <h1>
                 <span class="script-word">Monkey King</span>
-                <span>Garage para autos con caracter.</span>
+                <span>Tu auto en manos expertas</span>
               </h1>
-
-              <p class="hero-copy">
-                Mockup informativo para presentar servicios, confianza, equipo y datos de contacto
-                de Monkey King Garage. Este contenido es referencial hasta contar con informacion
-                real.
-              </p>
-
-              <div class="hero-actions">
-                <v-btn class="king-button" href="#contacto" rounded="lg" size="large">
-                  Agendar revision
-                </v-btn>
-                <v-btn
-                  class="outline-button"
-                  href="#servicios"
-                  rounded="lg"
-                  size="large"
-                  variant="outlined"
-                >
-                  Ver servicios
-                </v-btn>
-              </div>
-
-              <div class="hero-stats">
-                <div v-for="stat in stats" :key="stat.label" class="stat-card">
-                  <strong>{{ stat.value }}</strong>
-                  <span>{{ stat.label }}</span>
-                </div>
-              </div>
-            </v-col>
-
-            <v-col cols="12" lg="5">
-              <v-card class="inspection-card" rounded="xl">
-                <div class="inspection-header">
-                  <v-icon icon="mdi-crown-outline" size="38" />
-                  <div>
-                    <span>Diagnostico del rey</span>
-                    <h2>Estado del vehiculo</h2>
-                  </div>
-                </div>
-
-                <v-divider class="my-6" />
-
-                <div class="check-row">
-                  <span>Scanner y codigos</span>
-                  <v-chip color="green" size="small" variant="tonal">Listo</v-chip>
-                </div>
-                <div class="check-row">
-                  <span>Frenos y suspension</span>
-                  <v-chip color="amber" size="small" variant="tonal">Revisar</v-chip>
-                </div>
-                <div class="check-row">
-                  <span>Presupuesto claro</span>
-                  <v-chip color="green" size="small" variant="tonal">Enviado</v-chip>
-                </div>
-
-                <v-sheet class="next-slot mt-6 pa-5" rounded="lg">
-                  <p class="mb-1">Proxima hora disponible</p>
-                  <strong>Hoy, 16:30 hrs</strong>
-                </v-sheet>
-              </v-card>
             </v-col>
           </v-row>
         </v-container>
@@ -228,7 +160,7 @@ const mechanics = [
                 <span class="eyebrow">Contacto</span>
                 <h2>Agenda una revision o pide una cotizacion.</h2>
                 <p>
-                  Datos de ejemplo: Avenida Taller 123, Puerto Montt. Lunes a viernes de 09:00 a
+                  Encuentranos en Monkey King Garage, Puerto Montt. Lunes a viernes de 09:00 a
                   18:30 hrs.
                 </p>
               </v-col>
@@ -253,6 +185,18 @@ const mechanics = [
                   >
                     Ver ubicacion
                   </v-btn>
+                </div>
+              </v-col>
+
+              <v-col cols="12">
+                <div class="map-frame">
+                  <iframe
+                    title="Ubicacion de Monkey King Garage en Google Maps"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d920.6874135358528!2d-72.94700357732248!3d-41.471592742226996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x96183bad93dc5bdd%3A0xa9f40dc1c1f5018e!2sMonkey%20king%20Garage!5e0!3m2!1sen!2scl!4v1782585888771!5m2!1sen!2scl"
+                    allowfullscreen
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                  />
                 </div>
               </v-col>
             </v-row>
@@ -282,10 +226,6 @@ const mechanics = [
 
 .brand-mark,
 .nav-links,
-.hero-actions,
-.hero-stats,
-.inspection-header,
-.check-row,
 .process-card {
   display: flex;
   align-items: center;
@@ -308,13 +248,10 @@ const mechanics = [
 
 .brand-mark span,
 .nav-links a,
-.hero-copy,
 .section-heading p,
 .service-card p,
 .team-card p,
-.contact-card p,
-.inspection-card p,
-.stat-card span {
+.contact-card p {
   color: rgba(255, 238, 197, 0.76);
 }
 
@@ -380,24 +317,44 @@ const mechanics = [
 }
 
 .hero-section {
-  min-height: 100vh;
-  padding: 8rem 0 5rem;
+  display: flex;
+  align-items: center;
+  min-height: calc(100svh - 76px);
+  padding: clamp(1.5rem, 3vw, 2.25rem) 0;
+  overflow: hidden;
+}
+
+.hero-section::before,
+.hero-section::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: '';
+}
+
+.hero-section::before {
+  z-index: -2;
+  background-image: var(--hero-image);
+  background-position: center;
+  background-size: cover;
+  filter: saturate(1.08) contrast(1.05) sepia(0.08);
+}
+
+.hero-section::after {
+  z-index: -1;
+  background:
+    radial-gradient(circle at 72% 32%, rgba(255, 151, 24, 0.08), transparent 20rem),
+    linear-gradient(90deg, rgba(9, 8, 6, 0.96) 0%, rgba(9, 8, 6, 0.72) 34%, rgba(9, 8, 6, 0.28) 68%, rgba(9, 8, 6, 0.66) 100%),
+    linear-gradient(180deg, rgba(9, 8, 6, 0.88) 0%, rgba(9, 8, 6, 0.2) 42%, rgba(9, 8, 6, 0.86) 100%);
+}
+
+.hero-section .v-container {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-row {
-  min-height: calc(100vh - 13rem);
-}
-
-.king-chip {
-  color: #160900 !important;
-  background: linear-gradient(90deg, #ffdd42, #ff9d18 52%, #ff6422) !important;
-  border: 2px solid #050505;
-  box-shadow:
-    0 0 0 2px #ffc322,
-    0 0 1.8rem rgba(255, 142, 27, 0.45);
-  font-weight: 950;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  min-height: 0;
 }
 
 .hero-section h1 {
@@ -408,7 +365,7 @@ const mechanics = [
   font-style: italic;
   font-weight: 900;
   letter-spacing: -0.06em;
-  line-height: 0.82;
+  line-height: 0.74;
   text-shadow:
     4px 4px 0 #050505,
     -2px -2px 0 #050505,
@@ -424,23 +381,9 @@ const mechanics = [
   font-family: 'Brush Script MT', 'Segoe Script', cursive;
   font-size: 0.72em;
   letter-spacing: -0.035em;
-  line-height: 0.95;
+  line-height: 0.76;
   transform: rotate(-3deg);
   transform-origin: left center;
-}
-
-.hero-copy {
-  max-width: 43rem;
-  margin: 2rem 0;
-  color: rgba(255, 238, 197, 0.82);
-  font-size: clamp(1.08rem, 2vw, 1.3rem);
-  font-weight: 650;
-  line-height: 1.75;
-}
-
-.hero-actions {
-  flex-wrap: wrap;
-  gap: 1rem;
 }
 
 .king-button {
@@ -465,42 +408,6 @@ const mechanics = [
   text-transform: uppercase;
 }
 
-.hero-stats {
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 3rem;
-}
-
-.stat-card {
-  min-width: 9rem;
-  padding: 1rem 1.25rem;
-  background:
-    linear-gradient(145deg, rgba(255, 189, 26, 0.13), rgba(255, 84, 22, 0.08)), rgba(0, 0, 0, 0.48);
-  border: 2px solid rgba(255, 191, 31, 0.76);
-  border-radius: 1.25rem;
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 119, 24, 0.28),
-    0 0.9rem 2rem rgba(0, 0, 0, 0.28);
-}
-
-.stat-card strong {
-  display: block;
-  color: #ffcf27;
-  font-family: Impact, Haettenschweiler, 'Arial Black', sans-serif;
-  font-size: 2rem;
-  font-style: italic;
-  line-height: 1;
-  text-shadow: 2px 2px 0 #000000;
-}
-
-.stat-card span {
-  display: block;
-  margin-top: 0.35rem;
-  font-size: 0.85rem;
-  font-weight: 800;
-}
-
-.inspection-card,
 .service-card,
 .team-card,
 .contact-card,
@@ -511,40 +418,11 @@ const mechanics = [
     0 1.2rem 2.6rem rgba(0, 0, 0, 0.42);
 }
 
-.inspection-card {
-  position: relative;
-  overflow: hidden;
-  padding: clamp(1.5rem, 4vw, 2.5rem);
-  background:
-    radial-gradient(circle at 78% 18%, rgba(255, 198, 34, 0.28), transparent 12rem),
-    linear-gradient(145deg, rgba(23, 19, 14, 0.98), rgba(5, 5, 5, 0.96));
-}
-
-.inspection-card::after {
-  position: absolute;
-  right: -2.5rem;
-  bottom: -3rem;
-  color: rgba(255, 193, 30, 0.08);
-  content: 'MK';
-  font-family: Impact, Haettenschweiler, 'Arial Black', sans-serif;
-  font-size: 9rem;
-  font-style: italic;
-  line-height: 1;
-}
-
-.inspection-header {
-  position: relative;
-  z-index: 1;
-  gap: 1rem;
-}
-
-.inspection-header .v-icon,
 .service-card .v-icon {
   color: #ffcf27;
   filter: drop-shadow(2px 2px 0 #000000) drop-shadow(0 0 0.9rem rgba(255, 139, 34, 0.6));
 }
 
-.inspection-header span,
 .section-heading span,
 .eyebrow {
   color: #ff9b19;
@@ -553,37 +431,6 @@ const mechanics = [
   letter-spacing: 0.16em;
   text-transform: uppercase;
   text-shadow: 1px 1px 0 #000000;
-}
-
-.inspection-header h2 {
-  color: #ffcf27;
-  font-family: Impact, Haettenschweiler, 'Arial Black', sans-serif;
-  font-size: 2rem;
-  font-style: italic;
-  letter-spacing: -0.02em;
-  text-shadow: 2px 2px 0 #000000;
-}
-
-.check-row {
-  position: relative;
-  z-index: 1;
-  justify-content: space-between;
-  padding: 1rem 0;
-  color: #fff0c7;
-  font-weight: 850;
-}
-
-.next-slot {
-  position: relative;
-  z-index: 1;
-  color: #fff3c6;
-  background: rgba(0, 0, 0, 0.62) !important;
-  border: 2px solid rgba(255, 176, 0, 0.54);
-}
-
-.next-slot strong {
-  color: #ffcf27;
-  font-size: 1.3rem;
 }
 
 .content-section {
@@ -735,9 +582,30 @@ const mechanics = [
   gap: 1rem;
 }
 
+.map-frame {
+  position: relative;
+  overflow: hidden;
+  height: clamp(18rem, 38vw, 28rem);
+  margin-top: 1.5rem;
+  background: rgba(0, 0, 0, 0.62);
+  border: 2px solid rgba(255, 176, 0, 0.68);
+  border-radius: 1.25rem;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 119, 24, 0.22),
+    0 1rem 2rem rgba(0, 0, 0, 0.3);
+}
+
+.map-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 @media (max-width: 959px) {
   .hero-section {
-    padding-top: 7rem;
+    min-height: auto;
+    padding-top: 1.5rem;
   }
 
   .hero-section h1 {
@@ -750,12 +618,8 @@ const mechanics = [
     font-size: 0.95rem;
   }
 
-  .hero-actions .v-btn {
-    width: 100%;
-  }
-
-  .stat-card {
-    flex: 1 1 calc(50% - 1rem);
+  .hero-section h1 {
+    font-size: clamp(2.8rem, 16vw, 4.2rem);
   }
 }
 </style>
