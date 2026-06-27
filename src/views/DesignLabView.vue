@@ -3,9 +3,10 @@ import { computed, ref } from 'vue'
 
 import aboutImage from '@/assets/images/about.png'
 import heroImage from '@/assets/images/hero-image.jpg'
+import heroImage2 from '@/assets/images/hero-image-2.jpg'
 import logoImage from '@/assets/images/monkey-king-garage-logo.png'
 
-type DesignKey = 'original' | 'retro' | 'blueprint'
+type DesignKey = 'original' | 'retro' | 'blueprint' | 'caleta' | 'originalCaletaMesh'
 
 type DesignVariant = {
   key: DesignKey
@@ -36,6 +37,18 @@ const designs: DesignVariant[] = [
     name: 'Blueprint Rally',
     label: 'Tecnico, limpio, azul, con cortes diagonales y ritmo de pista.',
     className: 'design-blueprint',
+  },
+  {
+    key: 'caleta',
+    name: 'Caleta de Diagnostico',
+    label: 'Puerto Montt lluvioso, taller de puerto, precision sin pose.',
+    className: 'design-caleta',
+  },
+  {
+    key: 'originalCaletaMesh',
+    name: 'Original + Malla Caleta',
+    label: 'Original actual, con fondo cuadriculado verde despues del hero.',
+    className: 'design-original design-original-caleta-mesh',
   },
 ]
 
@@ -68,7 +81,7 @@ const aboutText =
 <template>
   <v-main
     :class="['design-lab', activeDesign.className]"
-    :style="{ '--hero-image': `url(${heroImage})` }"
+    :style="{ '--hero-image': `url(${heroImage})`, '--hero-image-2': `url(${heroImage2})` }"
   >
     <div class="lab-switcher">
       <v-container class="switcher-inner">
@@ -277,6 +290,8 @@ const aboutText =
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@500;700&family=Teko:wght@500;600;700&display=swap');
+
 .design-lab {
   --lab-bg: #090806;
   --lab-bg-alt: #120f0b;
@@ -341,6 +356,62 @@ const aboutText =
     42px 42px,
     42px 42px,
     auto;
+}
+
+.design-caleta {
+  --lab-bg: #10191b;
+  --lab-bg-alt: #17282b;
+  --lab-surface: rgba(217, 225, 211, 0.92);
+  --lab-text: #102024;
+  --lab-heading: #edf2e8;
+  --lab-muted: rgba(237, 242, 232, 0.74);
+  --lab-primary: #b96f3a;
+  --lab-secondary: #f1c85b;
+  --lab-line: #274148;
+  --lab-font-display: 'Teko', 'Arial Narrow', sans-serif;
+  --lab-font-body: 'Atkinson Hyperlegible', Arial, sans-serif;
+  --lab-font-utility: 'IBM Plex Mono', monospace;
+
+  background:
+    radial-gradient(circle at 12% 8%, rgba(122, 168, 159, 0.34), transparent 20rem),
+    radial-gradient(circle at 80% 16%, rgba(185, 111, 58, 0.2), transparent 24rem),
+    linear-gradient(rgba(241, 200, 91, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(241, 200, 91, 0.05) 1px, transparent 1px),
+    linear-gradient(180deg, #10191b 0%, #17282b 52%, #0c1417 100%);
+  background-size:
+    auto,
+    auto,
+    4.25rem 4.25rem,
+    4.25rem 4.25rem,
+    auto;
+}
+
+.design-original {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 122, 26, 0.2), transparent 28rem),
+    radial-gradient(circle at 82% 32%, rgba(255, 221, 51, 0.14), transparent 34rem),
+    linear-gradient(180deg, #050403 0%, #0b0704 38%, #080706 100%);
+}
+
+.design-original::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  content: '';
+  background:
+    linear-gradient(104deg, transparent 0 32%, rgba(255, 176, 0, 0.07) 34% 40%, transparent 42%),
+    radial-gradient(ellipse at 18% 42%, rgba(255, 176, 0, 0.11), transparent 34rem),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.024) 0 1px, transparent 1px 72px);
+  mix-blend-mode: screen;
+}
+
+.design-original > * {
+  position: relative;
+  z-index: 1;
 }
 
 .lab-switcher {
@@ -411,6 +482,11 @@ const aboutText =
   color: #111111;
   background: var(--lab-secondary);
   border-color: var(--lab-secondary);
+}
+
+.design-lab :is(a, button):focus-visible {
+  outline: 3px solid var(--lab-secondary);
+  outline-offset: 4px;
 }
 
 .site-nav {
@@ -625,6 +701,7 @@ const aboutText =
 
 .design-original .hero-section::before {
   opacity: 0.58;
+  background-image: var(--hero-image-2);
   background-position: center right;
   filter: saturate(1.12) contrast(1.08) brightness(0.92);
 }
@@ -643,37 +720,55 @@ const aboutText =
       180deg,
       rgba(5, 5, 5, 0.82) 0%,
       rgba(5, 5, 5, 0.22) 45%,
-      rgba(5, 5, 5, 0.88) 100%
+      rgba(5, 5, 5, 0.58) 72%,
+      rgba(5, 5, 5, 0) 100%
     );
 }
 
 .design-original .services-section {
-  margin-top: -6rem;
-  padding-top: clamp(8rem, 12vw, 11rem);
+  overflow: hidden;
+  margin-top: -7rem;
+  padding-top: clamp(9rem, 13vw, 12rem);
+  padding-bottom: clamp(8rem, 12vw, 11rem);
+  background: transparent;
+}
+
+.design-original .content-section > .v-container {
+  position: relative;
+  z-index: 2;
+}
+
+.design-original .services-section::before {
+  position: absolute;
+  inset: -10rem 0 -8rem;
+  z-index: 0;
+  pointer-events: none;
+  content: '';
   background:
-    radial-gradient(circle at 12% 10%, rgba(255, 178, 0, 0.2), transparent 24rem),
+    radial-gradient(circle at 12% 22%, rgba(255, 178, 0, 0.22), transparent 28rem),
     linear-gradient(
       180deg,
-      rgba(5, 5, 5, 0.76) 0%,
-      rgba(5, 5, 5, 0.82) 34%,
-      rgba(18, 15, 11, 0.92) 62%,
-      #080706 100%
+      rgba(5, 4, 3, 0) 0%,
+      rgba(5, 4, 3, 0.72) 21%,
+      rgba(5, 4, 3, 0.9) 62%,
+      rgba(5, 4, 3, 0) 100%
     ),
-    var(--hero-image);
+    linear-gradient(90deg, rgba(5, 4, 3, 0.9), rgba(5, 4, 3, 0.58), rgba(5, 4, 3, 0.92));
   background-position:
-    12% 10%,
+    12% 22%,
     center,
-    center top;
+    center;
   background-repeat: no-repeat;
-  background-size: auto, auto, cover;
+  background-size: auto, auto, auto;
 }
 
 .design-original .about-section,
 .design-original .team-section,
 .design-original .contact-section {
   overflow: hidden;
-  margin-top: -5rem;
-  padding-top: clamp(8rem, 12vw, 11rem);
+  margin-top: -7rem;
+  padding-top: clamp(10rem, 14vw, 13rem);
+  padding-bottom: clamp(8rem, 11vw, 10rem);
   background: transparent;
 }
 
@@ -688,7 +783,7 @@ const aboutText =
 .design-original .team-section::before,
 .design-original .contact-section::before {
   position: absolute;
-  inset: -7rem 0;
+  inset: -10rem 0;
   z-index: 0;
   pointer-events: none;
   content: '';
@@ -696,14 +791,14 @@ const aboutText =
 
 .design-original .about-section::before {
   background:
-    radial-gradient(circle at 82% 34%, rgba(255, 161, 25, 0.16), transparent 26rem),
-    linear-gradient(90deg, rgba(255, 161, 25, 0.1), transparent 42%, rgba(255, 161, 25, 0.08)),
+    radial-gradient(circle at 82% 36%, rgba(255, 161, 25, 0.15), transparent 28rem),
+    linear-gradient(90deg, rgba(255, 161, 25, 0.08), transparent 42%, rgba(255, 161, 25, 0.07)),
     linear-gradient(
       180deg,
       rgba(5, 5, 5, 0) 0%,
-      rgba(5, 5, 5, 0.48) 22%,
-      rgba(5, 5, 5, 0.82) 48%,
-      rgba(5, 5, 5, 0.78) 78%,
+      rgba(5, 5, 5, 0.34) 18%,
+      rgba(5, 5, 5, 0.7) 45%,
+      rgba(5, 5, 5, 0.62) 78%,
       rgba(5, 5, 5, 0) 100%
     );
 }
@@ -711,15 +806,34 @@ const aboutText =
 .design-original .team-section::before,
 .design-original .contact-section::before {
   background:
-    radial-gradient(circle at 12% 24%, rgba(255, 178, 0, 0.16), transparent 26rem),
+    radial-gradient(circle at 12% 26%, rgba(255, 178, 0, 0.16), transparent 30rem),
     linear-gradient(
       180deg,
       rgba(18, 15, 11, 0) 0%,
-      rgba(18, 15, 11, 0.42) 22%,
-      rgba(8, 7, 6, 0.82) 52%,
-      rgba(8, 7, 6, 0.72) 80%,
+      rgba(18, 15, 11, 0.3) 18%,
+      rgba(8, 7, 6, 0.72) 52%,
+      rgba(8, 7, 6, 0.58) 80%,
       rgba(8, 7, 6, 0) 100%
     );
+}
+
+.design-original-caleta-mesh .services-section::before,
+.design-original-caleta-mesh .about-section::before,
+.design-original-caleta-mesh .team-section::before,
+.design-original-caleta-mesh .contact-section::before {
+  background:
+    radial-gradient(circle at 12% 8%, rgba(122, 168, 159, 0.32), transparent 22rem),
+    radial-gradient(circle at 84% 16%, rgba(185, 111, 58, 0.16), transparent 24rem),
+    linear-gradient(rgba(241, 200, 91, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(241, 200, 91, 0.05) 1px, transparent 1px),
+    linear-gradient(180deg, #10191b 0%, #17282b 52%, #0c1417 100%);
+  background-position: center, center, center, center, center;
+  background-size:
+    auto,
+    auto,
+    4.25rem 4.25rem,
+    4.25rem 4.25rem,
+    auto;
 }
 
 .section-heading {
@@ -1231,6 +1345,350 @@ const aboutText =
   border-top: 1px solid rgba(255, 122, 26, 0.22);
 }
 
+.design-caleta .site-nav {
+  width: min(1120px, calc(100% - 2rem));
+  margin: 1.25rem auto 0;
+  color: var(--lab-text);
+  background: rgba(217, 225, 211, 0.9);
+  border: 1px solid rgba(241, 200, 91, 0.3);
+  border-radius: 1.15rem 1.15rem 0.35rem 0.35rem;
+  box-shadow:
+    inset 0 -0.45rem 0 rgba(185, 111, 58, 0.3),
+    0 1.4rem 3rem rgba(4, 10, 12, 0.3);
+}
+
+.design-caleta .nav-inner {
+  min-height: 5rem;
+}
+
+.design-caleta .brand-mark p,
+.design-caleta .footer-brand p,
+.design-caleta .nav-links a,
+.design-caleta .section-heading span,
+.design-caleta .eyebrow {
+  font-family: var(--lab-font-utility);
+  font-style: normal;
+  text-shadow: none;
+}
+
+.design-caleta .brand-mark p,
+.design-caleta .footer-brand p {
+  color: var(--lab-line);
+  font-size: 0.9rem;
+  letter-spacing: -0.02em;
+}
+
+.design-caleta .brand-mark span,
+.design-caleta .footer-brand span {
+  color: rgba(16, 32, 36, 0.72);
+  font-family: var(--lab-font-utility);
+  font-size: 0.76rem;
+}
+
+.design-caleta .nav-links a {
+  color: var(--lab-line);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+}
+
+.design-caleta .hero-section {
+  min-height: auto;
+  padding: clamp(4.5rem, 8vw, 7rem) 0 clamp(5rem, 9vw, 8rem);
+  overflow: visible;
+}
+
+.design-caleta .hero-section::before {
+  inset: 1.5rem max(1rem, calc((100vw - 1120px) / 2)) 2rem auto;
+  width: min(35rem, 43vw);
+  height: auto;
+  opacity: 0.42;
+  background-image: var(--hero-image);
+  background-position: center;
+  background-size: cover;
+  border: 1px solid rgba(241, 200, 91, 0.32);
+  border-radius: 0.75rem 5rem 0.75rem 0.75rem;
+  filter: saturate(0.72) contrast(1.1) brightness(0.7);
+}
+
+.design-caleta .hero-section::after {
+  inset: auto 0 0;
+  height: 7.5rem;
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0 calc(50% - 10rem),
+      rgba(241, 200, 91, 0.5) calc(50% - 10rem) calc(50% - 9.8rem),
+      transparent calc(50% - 9.8rem)
+    ),
+    linear-gradient(
+      90deg,
+      transparent 0 calc(50% + 9.8rem),
+      rgba(241, 200, 91, 0.5) calc(50% + 9.8rem) calc(50% + 10rem),
+      transparent calc(50% + 10rem)
+    ),
+    linear-gradient(180deg, transparent 0%, rgba(6, 12, 14, 0.66) 100%);
+}
+
+.design-caleta .hero-row {
+  align-items: stretch;
+}
+
+.design-caleta .hero-kicker {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.45rem 0.7rem;
+  color: #0f2024;
+  font-family: var(--lab-font-utility);
+  font-size: 0.78rem;
+  font-style: normal;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+  background: var(--lab-secondary);
+  border-radius: 999px;
+  text-shadow: none;
+}
+
+.design-caleta .hero-section h1 {
+  max-width: 10ch;
+  margin-top: 1rem;
+  color: var(--lab-heading);
+  font-size: clamp(4.2rem, 10vw, 9rem);
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.76;
+  text-shadow: none;
+  text-transform: uppercase;
+}
+
+.design-caleta .hero-summary {
+  max-width: 33rem;
+  color: var(--lab-muted);
+  font-size: clamp(1rem, 1.7vw, 1.18rem);
+}
+
+.design-caleta .hero-visual {
+  position: relative;
+  display: grid;
+  min-height: clamp(22rem, 38vw, 32rem);
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(241, 200, 91, 0.22), transparent 32%),
+    linear-gradient(145deg, rgba(122, 168, 159, 0.22), rgba(11, 22, 25, 0.58));
+  border: 1px solid rgba(241, 200, 91, 0.36);
+  border-radius: 48% 52% 8% 8% / 42% 42% 8% 8%;
+  box-shadow:
+    inset 0 0 0 0.55rem rgba(15, 31, 35, 0.78),
+    0 1.6rem 4rem rgba(4, 10, 12, 0.36);
+}
+
+.design-caleta .hero-visual::before {
+  position: absolute;
+  width: 116%;
+  height: 9rem;
+  content: '';
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(241, 200, 91, 0.2) 45%,
+    rgba(241, 200, 91, 0.72) 50%,
+    rgba(241, 200, 91, 0.2) 55%,
+    transparent 100%
+  );
+  filter: blur(2px);
+  transform: rotate(-17deg) translateY(-5rem);
+  animation: caleta-scan 7s ease-in-out infinite;
+}
+
+.design-caleta .hero-visual::after {
+  position: absolute;
+  inset: 1.4rem;
+  content: '';
+  border: 1px dashed rgba(237, 242, 232, 0.34);
+  border-radius: inherit;
+}
+
+.design-caleta .hero-visual img {
+  position: relative;
+  z-index: 1;
+  width: min(64%, 20rem);
+  filter: drop-shadow(0 1.2rem 1.4rem rgba(0, 0, 0, 0.42));
+}
+
+.design-caleta .services-section,
+.design-caleta .about-section,
+.design-caleta .team-section,
+.design-caleta .contact-section {
+  color: var(--lab-heading);
+  background: transparent;
+}
+
+.design-caleta .section-heading {
+  margin-right: 0;
+  margin-left: 0;
+  text-align: left;
+}
+
+.design-caleta .section-heading span,
+.design-caleta .eyebrow {
+  color: var(--lab-secondary);
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+}
+
+.design-caleta .section-heading h2,
+.design-caleta .contact-section h2 {
+  max-width: 13ch;
+  color: var(--lab-heading);
+  font-size: clamp(3rem, 6vw, 5.7rem);
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 0.82;
+  text-shadow: none;
+  text-transform: uppercase;
+}
+
+.design-caleta .section-heading p,
+.design-caleta .contact-section p,
+.design-caleta .team-card p {
+  color: var(--lab-muted);
+}
+
+.design-caleta .services-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.design-caleta .service-card,
+.design-caleta .team-card,
+.design-caleta .about-image-card {
+  color: var(--lab-text);
+  background:
+    linear-gradient(90deg, rgba(185, 111, 58, 0.18) 0 0.45rem, transparent 0.45rem),
+    var(--lab-surface);
+  border: 1px solid rgba(241, 200, 91, 0.24);
+  border-radius: 0.85rem;
+  box-shadow: 0 1.1rem 2.4rem rgba(4, 10, 12, 0.22);
+}
+
+.design-caleta .service-card {
+  min-height: 11rem;
+  padding: 1.4rem;
+  place-items: start;
+  text-align: left;
+}
+
+.design-caleta .service-card:nth-child(4n + 1),
+.design-caleta .service-card:nth-child(4n + 4) {
+  transform: translateY(1.2rem);
+}
+
+.design-caleta .service-card .v-icon {
+  color: var(--lab-primary);
+  font-size: 2.35rem;
+  filter: none;
+}
+
+.design-caleta .service-card h3,
+.design-caleta .team-card h3 {
+  color: var(--lab-text);
+  font-size: clamp(1.55rem, 2.8vw, 2.15rem);
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 0.86;
+  text-shadow: none;
+  text-transform: uppercase;
+}
+
+.design-caleta .about-image-card {
+  padding: 0.7rem;
+  background:
+    linear-gradient(135deg, rgba(241, 200, 91, 0.18), transparent 48%), rgba(217, 225, 211, 0.12);
+  border-color: rgba(241, 200, 91, 0.32);
+  border-radius: 5rem 0.85rem 0.85rem 0.85rem;
+}
+
+.design-caleta .about-image-card img {
+  filter: saturate(0.75) contrast(1.04);
+  border-radius: 4.4rem 0.45rem 0.45rem 0.45rem;
+}
+
+.design-caleta .team-card {
+  text-align: left;
+}
+
+.design-caleta .team-avatar {
+  margin: 0 0 1.25rem;
+  color: #102024;
+  font-family: var(--lab-font-utility);
+  font-size: 0.95rem;
+  font-style: normal;
+  background: var(--lab-secondary);
+  border: 0;
+  border-radius: 0.75rem;
+}
+
+.design-caleta .primary-action,
+.design-caleta .secondary-action {
+  font-family: var(--lab-font-utility);
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(241, 200, 91, 0.38);
+  border-radius: 999px;
+  box-shadow: none;
+}
+
+.design-caleta .primary-action {
+  color: #102024;
+  background: var(--lab-secondary);
+}
+
+.design-caleta .secondary-action {
+  color: var(--lab-heading);
+  background: rgba(217, 225, 211, 0.08);
+}
+
+.design-caleta .map-frame {
+  border: 1px solid rgba(241, 200, 91, 0.34);
+  border-radius: 1rem 4rem 1rem 1rem;
+  box-shadow: 0 1.2rem 3rem rgba(4, 10, 12, 0.28);
+}
+
+.design-caleta .site-footer {
+  color: var(--lab-text);
+  background: rgba(217, 225, 211, 0.92);
+  border-top: 0;
+}
+
+.design-caleta .footer-links a {
+  color: var(--lab-line);
+  font-family: var(--lab-font-utility);
+  font-size: 0.78rem;
+  text-shadow: none;
+}
+
+@keyframes caleta-scan {
+  0%,
+  100% {
+    transform: rotate(-17deg) translateY(-7rem);
+  }
+
+  46%,
+  58% {
+    transform: rotate(-17deg) translateY(7rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .design-caleta .hero-visual::before {
+    animation: none;
+  }
+}
+
 @media (max-width: 959px) {
   .nav-links {
     display: none;
@@ -1248,8 +1706,20 @@ const aboutText =
   }
 
   .design-blueprint .service-card:nth-child(3n),
-  .design-blueprint .team-card:nth-child(2) {
+  .design-blueprint .team-card:nth-child(2),
+  .design-caleta .service-card:nth-child(4n + 1),
+  .design-caleta .service-card:nth-child(4n + 4) {
     transform: none;
+  }
+
+  .design-caleta .hero-section::before {
+    inset: 1rem 1rem auto;
+    width: auto;
+    height: 18rem;
+  }
+
+  .design-caleta .hero-section::after {
+    opacity: 0.65;
   }
 }
 
@@ -1263,6 +1733,19 @@ const aboutText =
 
   .site-nav {
     border-radius: 0;
+  }
+
+  .design-caleta .site-nav {
+    width: calc(100% - 1rem);
+    margin-top: 0.5rem;
+  }
+
+  .design-caleta .hero-section {
+    padding-top: 3.5rem;
+  }
+
+  .design-caleta .hero-section h1 {
+    font-size: clamp(3.6rem, 19vw, 5rem);
   }
 
   .brand-mark img,
