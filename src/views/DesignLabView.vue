@@ -6,6 +6,12 @@ import aboutImage from '@/assets/images/about.png'
 import heroImage from '@/assets/images/hero-image.jpg'
 import heroImage2 from '@/assets/images/hero-image-2.jpg'
 import logoImage from '@/assets/images/monkey-king-garage-logo.png'
+import tool1 from '@/assets/images/tools/tool-1.png'
+import tool2 from '@/assets/images/tools/tool-2.png'
+import tool3 from '@/assets/images/tools/tool-3.png'
+import tool4 from '@/assets/images/tools/tool-4.png'
+import tool5 from '@/assets/images/tools/tool-5.png'
+import tool6 from '@/assets/images/tools/tool-6.png'
 
 type DesignKey = 'original' | 'retro' | 'blueprint' | 'caleta' | 'originalCaletaMesh'
 
@@ -63,7 +69,7 @@ const services = [
   { title: 'Frenos', icon: 'mdi-car-brake-alert' },
   { title: 'Motor', icon: 'mdi-engine' },
   { title: 'Scanner automotriz', icon: 'mdi-car-cog' },
-  { title: 'Suspension', icon: 'mdi-car-suspension' },
+  { title: 'Suspension', icon: 'mdi-car-lifted-pickup' },
   { title: 'Tren delantero', icon: 'mdi-car-wrench' },
   { title: 'Embrague', icon: 'mdi-car-shift-pattern' },
   { title: 'Bateria y alternador', icon: 'mdi-car-battery' },
@@ -78,6 +84,19 @@ const workPhotos = [
   { src: aboutImage, alt: 'Revision de vehiculo en Monkey King Garage' },
   { src: aboutImage, alt: 'Auto listo despues de una mantencion' },
   { src: aboutImage, alt: 'Registro de trabajo del taller Monkey King Garage' },
+]
+
+const toolDecorations = [
+  { src: tool1, side: 'left', top: '5%', size: '8.5rem', tilt: '-18deg' },
+  { src: tool4, side: 'right', top: '9%', size: '9rem', tilt: '16deg' },
+  { src: tool2, side: 'left', top: '22%', size: '7.5rem', tilt: '23deg' },
+  { src: tool5, side: 'right', top: '27%', size: '8rem', tilt: '-24deg' },
+  { src: tool3, side: 'left', top: '43%', size: '9.25rem', tilt: '11deg' },
+  { src: tool6, side: 'right', top: '48%', size: '7.25rem', tilt: '-12deg' },
+  { src: tool4, side: 'left', top: '64%', size: '7.75rem', tilt: '-31deg' },
+  { src: tool1, side: 'right', top: '68%', size: '8.75rem', tilt: '28deg' },
+  { src: tool5, side: 'left', top: '82%', size: '8rem', tilt: '17deg' },
+  { src: tool2, side: 'right', top: '86%', size: '7.5rem', tilt: '-19deg' },
 ]
 
 const aboutText =
@@ -164,88 +183,105 @@ const aboutText =
       </v-container>
     </section>
 
-    <section id="servicios" class="content-section services-section">
-      <v-container>
-        <div class="section-heading">
-          <span>Servicios principales</span>
-          <h2>Servicios mecanicos para mantener tu auto al dia.</h2>
-        </div>
+    <div class="post-hero-content">
+      <div class="tool-background" aria-hidden="true">
+        <img
+          v-for="(tool, index) in toolDecorations"
+          :key="`${tool.src}-${index}`"
+          :class="['tool-decoration', `tool-decoration-${tool.side}`]"
+          :src="tool.src"
+          alt=""
+          :style="{
+            '--tool-top': tool.top,
+            '--tool-size': tool.size,
+            '--tool-tilt': tool.tilt,
+          }"
+        />
+      </div>
 
-        <div class="services-grid">
-          <article v-for="service in services" :key="service.title" class="service-card">
-            <v-icon :icon="service.icon" />
-            <h3>{{ service.title }}</h3>
-          </article>
-        </div>
-      </v-container>
-    </section>
+      <section id="servicios" class="content-section services-section">
+        <v-container>
+          <div class="section-heading">
+            <span>Servicios principales</span>
+            <h2>Servicios mecanicos para mantener tu auto al dia.</h2>
+          </div>
 
-    <section id="nosotros" class="content-section about-section">
-      <v-container>
-        <v-row align="center" class="about-row">
-          <v-col cols="12" md="6">
-            <div class="section-heading text-left">
-              <span>Sobre el taller</span>
-              <h2>Un taller integral con atencion cercana.</h2>
-              <p>{{ aboutText }}</p>
-            </div>
-          </v-col>
+          <div class="services-grid">
+            <article v-for="service in services" :key="service.title" class="service-card">
+              <v-icon :icon="service.icon" />
+              <h3>{{ service.title }}</h3>
+            </article>
+          </div>
+        </v-container>
+      </section>
 
-          <v-col cols="12" md="6">
-            <div class="about-image-card">
-              <img :src="aboutImage" alt="Entrada de Monkey King Garage" />
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
+      <section id="nosotros" class="content-section about-section">
+        <v-container>
+          <v-row align="center" class="about-row">
+            <v-col cols="12" md="6">
+              <div class="section-heading text-left">
+                <span>Sobre el taller</span>
+                <h2>Un taller integral con atencion cercana.</h2>
+                <p>{{ aboutText }}</p>
+              </div>
+            </v-col>
 
-    <WorkPhotosSection :photos="workPhotos" />
+            <v-col cols="12" md="6">
+              <div class="about-image-card">
+                <img :src="aboutImage" alt="Entrada de Monkey King Garage" />
+              </div>
+            </v-col>
+          </v-row>
+        </v-container>
+      </section>
 
-    <section id="contacto" class="content-section contact-section">
-      <v-container>
-        <v-row align="center" class="contact-row">
-          <v-col cols="12" md="7">
-            <span class="eyebrow">Contacto</span>
-            <h2>Agenda una revision o pide una cotizacion.</h2>
-            <p>
-              Encuentranos en Monkey King Garage, Puerto Montt. Lunes a viernes de 09:00 a 18:30
-              hrs.
-            </p>
-          </v-col>
+      <WorkPhotosSection :photos="workPhotos" />
 
-          <v-col cols="12" md="5">
-            <div class="contact-actions">
-              <a
-                class="primary-action"
-                :href="whatsappUrl"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                <v-icon icon="mdi-whatsapp" />
-                Escribir por WhatsApp
-              </a>
-              <a class="secondary-action" href="#contacto">
-                <v-icon icon="mdi-map-marker" />
-                Ver ubicacion
-              </a>
-            </div>
-          </v-col>
+      <section id="contacto" class="content-section contact-section">
+        <v-container>
+          <v-row align="center" class="contact-row">
+            <v-col cols="12" md="7">
+              <span class="eyebrow">Contacto</span>
+              <h2>Agenda una revision o pide una cotizacion.</h2>
+              <p>
+                Encuentranos en Monkey King Garage, Puerto Montt. Lunes a viernes de 09:00 a 18:30
+                hrs.
+              </p>
+            </v-col>
 
-          <v-col cols="12">
-            <div class="map-frame">
-              <iframe
-                title="Ubicacion de Monkey King Garage en Google Maps"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d920.6874135358528!2d-72.94700357732248!3d-41.471592742226996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x96183bad93dc5bdd%3A0xa9f40dc1c1f5018e!2sMonkey%20king%20Garage!5e0!3m2!1sen!2scl!4v1782585888771!5m2!1sen!2scl"
-                allowfullscreen
-                loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin"
-              />
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
+            <v-col cols="12" md="5">
+              <div class="contact-actions">
+                <a
+                  class="primary-action"
+                  :href="whatsappUrl"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <v-icon icon="mdi-whatsapp" />
+                  Escribir por WhatsApp
+                </a>
+                <a class="secondary-action" href="#contacto">
+                  <v-icon icon="mdi-map-marker" />
+                  Ver ubicacion
+                </a>
+              </div>
+            </v-col>
+
+            <v-col cols="12">
+              <div class="map-frame">
+                <iframe
+                  title="Ubicacion de Monkey King Garage en Google Maps"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d920.6874135358528!2d-72.94700357732248!3d-41.471592742226996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x96183bad93dc5bdd%3A0xa9f40dc1c1f5018e!2sMonkey%20king%20Garage!5e0!3m2!1sen!2scl!4v1782585888771!5m2!1sen!2scl"
+                  allowfullscreen
+                  loading="lazy"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                />
+              </div>
+            </v-col>
+          </v-row>
+        </v-container>
+      </section>
+    </div>
 
     <footer class="site-footer">
       <v-container class="footer-inner">
@@ -858,6 +894,78 @@ const aboutText =
   );
 }
 
+.post-hero-content {
+  position: relative;
+}
+
+.tool-background {
+  display: none;
+}
+
+.design-original-caleta-mesh .tool-background {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: block;
+  pointer-events: none;
+}
+
+.design-original-caleta-mesh .tool-decoration {
+  position: absolute;
+  top: var(--tool-top);
+  width: var(--tool-size);
+  height: auto;
+  opacity: 0.11;
+  filter: sepia(0.35) saturate(0.7) hue-rotate(115deg) brightness(0.86);
+  transform: rotate(var(--tool-tilt));
+  transform-origin: center;
+  user-select: none;
+}
+
+.design-original-caleta-mesh .tool-decoration-left {
+  left: clamp(0.75rem, 4vw, 4.5rem);
+}
+
+.design-original-caleta-mesh .tool-decoration-right {
+  right: clamp(0.75rem, 4vw, 4.5rem);
+}
+
+.design-original-caleta-mesh .content-section {
+  --lab-font-display: 'Teko', 'Arial Narrow', sans-serif;
+  --lab-font-body: 'Atkinson Hyperlegible', Arial, sans-serif;
+  --lab-font-utility: 'IBM Plex Mono', monospace;
+  --lab-heading: #edf2e8;
+  --lab-primary: #f1c85b;
+  --lab-muted: rgba(214, 226, 219, 0.74);
+
+  font-family: var(--lab-font-body);
+}
+
+.design-original-caleta-mesh .section-heading span,
+.design-original-caleta-mesh .eyebrow {
+  font-family: var(--lab-font-utility);
+  text-shadow: none;
+}
+
+.design-original-caleta-mesh .section-heading h2,
+.design-original-caleta-mesh .contact-section h2,
+.design-original-caleta-mesh .service-card h3 {
+  font-family: var(--lab-font-display);
+  font-style: normal;
+  text-transform: uppercase;
+}
+
+.design-original-caleta-mesh .section-heading h2,
+.design-original-caleta-mesh .contact-section h2 {
+  text-shadow: none;
+}
+
+.design-original-caleta-mesh .section-heading p,
+.design-original-caleta-mesh .contact-section p {
+  color: var(--lab-muted);
+  text-transform: none;
+}
+
 .design-original-caleta-mesh .service-card {
   background:
     linear-gradient(135deg, rgba(122, 168, 159, 0.12), transparent 48%), rgba(7, 22, 24, 0.82);
@@ -869,13 +977,13 @@ const aboutText =
 }
 
 .design-original-caleta-mesh .service-card .v-icon {
-  color: #e9c967;
+  color: #d7c078;
   filter: none;
 }
 
 .design-original-caleta-mesh .service-card h3 {
-  color: #ffb13b;
-  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.72);
+  color: #f1c85b;
+  text-shadow: none;
 }
 
 .section-heading {
@@ -1762,6 +1870,10 @@ const aboutText =
 
   .design-caleta .hero-section::after {
     opacity: 0.65;
+  }
+
+  .design-original-caleta-mesh .tool-background {
+    display: none;
   }
 }
 

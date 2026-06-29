@@ -150,6 +150,19 @@ const isPreviewOpen = computed({
     0 0.7rem 1.6rem rgba(2, 8, 9, 0.22);
 }
 
+:global(.design-original-caleta-mesh) .work-heading span {
+  color: #f1c85b;
+  font-family: var(--lab-font-utility, 'IBM Plex Mono', monospace);
+  text-shadow: none;
+}
+
+:global(.design-original-caleta-mesh) .work-heading h2 {
+  color: #edf2e8;
+  font-style: normal;
+  text-shadow: none;
+  text-transform: uppercase;
+}
+
 @media (max-width: 959px) {
   .work-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
