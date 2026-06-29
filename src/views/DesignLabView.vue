@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
+import WorkPhotosSection from '@/components/WorkPhotosSection.vue'
 import aboutImage from '@/assets/images/about.png'
 import heroImage from '@/assets/images/hero-image.jpg'
 import heroImage2 from '@/assets/images/hero-image-2.jpg'
@@ -68,10 +69,15 @@ const services = [
   { title: 'Bateria y alternador', icon: 'mdi-car-battery' },
 ]
 
-const mechanics = [
-  { name: 'Marco Ruiz', role: 'Especialista en diagnostico', initials: 'MR' },
-  { name: 'Camila Torres', role: 'Mecanica general y frenos', initials: 'CT' },
-  { name: 'Diego Soto', role: 'Motor y tren delantero', initials: 'DS' },
+const workPhotos = [
+  { src: aboutImage, alt: 'Auto en Monkey King Garage durante una mantencion' },
+  { src: aboutImage, alt: 'Trabajo mecanico en Monkey King Garage' },
+  { src: aboutImage, alt: 'Vehiculo atendido en Monkey King Garage' },
+  { src: aboutImage, alt: 'Trabajo realizado por Monkey King Garage' },
+  { src: aboutImage, alt: 'Detalle de trabajo mecanico en Monkey King Garage' },
+  { src: aboutImage, alt: 'Revision de vehiculo en Monkey King Garage' },
+  { src: aboutImage, alt: 'Auto listo despues de una mantencion' },
+  { src: aboutImage, alt: 'Registro de trabajo del taller Monkey King Garage' },
 ]
 
 const aboutText =
@@ -120,7 +126,7 @@ const aboutText =
         <nav class="nav-links" aria-label="Navegacion de prueba de diseno">
           <a href="#servicios">Servicios</a>
           <a href="#nosotros">Nosotros</a>
-          <a href="#equipo">Equipo</a>
+          <a href="#trabajos">Trabajos</a>
           <a href="#contacto">Contacto</a>
         </nav>
       </v-container>
@@ -194,22 +200,7 @@ const aboutText =
       </v-container>
     </section>
 
-    <section id="equipo" class="content-section team-section">
-      <v-container>
-        <div class="section-heading">
-          <span>Equipo mockup</span>
-          <h2>Mecanicos cercanos, visibles y faciles de contactar.</h2>
-        </div>
-
-        <div class="team-grid">
-          <article v-for="mechanic in mechanics" :key="mechanic.name" class="team-card">
-            <div class="team-avatar">{{ mechanic.initials }}</div>
-            <h3>{{ mechanic.name }}</h3>
-            <p>{{ mechanic.role }}</p>
-          </article>
-        </div>
-      </v-container>
-    </section>
+    <WorkPhotosSection :photos="workPhotos" />
 
     <section id="contacto" class="content-section contact-section">
       <v-container>
@@ -725,6 +716,26 @@ const aboutText =
     );
 }
 
+.design-original-caleta-mesh .hero-section::after {
+  background:
+    linear-gradient(180deg, rgba(5, 5, 5, 0) 56%, rgba(5, 5, 5, 0.78) 84%, #050505 100%),
+    radial-gradient(circle at 78% 38%, rgba(255, 207, 39, 0.18), transparent 24rem),
+    radial-gradient(circle at 14% 78%, rgba(255, 99, 20, 0.22), transparent 22rem),
+    linear-gradient(
+      90deg,
+      rgba(5, 5, 5, 0.94) 0%,
+      rgba(5, 5, 5, 0.74) 42%,
+      rgba(5, 5, 5, 0.48) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(5, 5, 5, 0.82) 0%,
+      rgba(5, 5, 5, 0.22) 45%,
+      rgba(5, 5, 5, 0.58) 72%,
+      rgba(5, 5, 5, 0) 100%
+    );
+}
+
 .design-original .services-section {
   overflow: hidden;
   margin-top: -7rem;
@@ -822,18 +833,49 @@ const aboutText =
 .design-original-caleta-mesh .team-section::before,
 .design-original-caleta-mesh .contact-section::before {
   background:
-    radial-gradient(circle at 12% 8%, rgba(122, 168, 159, 0.32), transparent 22rem),
-    radial-gradient(circle at 84% 16%, rgba(185, 111, 58, 0.16), transparent 24rem),
     linear-gradient(rgba(241, 200, 91, 0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(241, 200, 91, 0.05) 1px, transparent 1px),
     linear-gradient(180deg, #10191b 0%, #17282b 52%, #0c1417 100%);
-  background-position: center, center, center, center, center;
+  background-position: center, center, center;
   background-size:
-    auto,
-    auto,
     4.25rem 4.25rem,
     4.25rem 4.25rem,
     auto;
+}
+
+.design-original-caleta-mesh .services-section::after {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  height: clamp(7rem, 11vw, 11rem);
+  pointer-events: none;
+  content: '';
+  background: linear-gradient(
+    180deg,
+    rgba(5, 5, 5, 0.98) 0%,
+    rgba(5, 5, 5, 0.62) 42%,
+    rgba(16, 25, 27, 0) 100%
+  );
+}
+
+.design-original-caleta-mesh .service-card {
+  background:
+    linear-gradient(135deg, rgba(122, 168, 159, 0.12), transparent 48%), rgba(7, 22, 24, 0.82);
+  border: 1px solid rgba(241, 200, 91, 0.46);
+  border-radius: 1rem;
+  box-shadow:
+    inset 0 0 0 1px rgba(122, 168, 159, 0.12),
+    0 0.7rem 1.6rem rgba(2, 8, 9, 0.22);
+}
+
+.design-original-caleta-mesh .service-card .v-icon {
+  color: #e9c967;
+  filter: none;
+}
+
+.design-original-caleta-mesh .service-card h3 {
+  color: #ffb13b;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.72);
 }
 
 .section-heading {
